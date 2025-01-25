@@ -29,17 +29,11 @@ firebase.auth().onAuthStateChanged((user) => { //onAuthStateChanged is asynchron
   }
 })
 
-firebasedatabase.ref(`${email}`).get()
-  .then((data) => {
-    let Role = data().Role
-    console.log(Role)
-  })
-
 Signout.addEventListener("click", () => {
   firebase.auth().signOut()
     .then(() => {
       alert('User signed out successfully');
-      window.location.href = "/Main_Page/index.html";
+      window.location.href = "../Main_Page/index.html";
     })
     .catch((error) => {
       console.error('Sign out error:', error);
