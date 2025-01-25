@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read News</title>
+    <link rel="stylesheet" href="style_of_R_n.css">
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app-compat.js"></script> <!--Actually it's connecting my firebase app-->
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-database-compat.js"></script> <!--Actually it's connecting my firebase app-->
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore-compat.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!--For adding styles of like button, dislike...-->
+</head>
+<body>
+    <ul id="unordered-list">
+        <li id="M-H"><b>Kanewsif</b></li>
+        <li id="So" class="List"><button class="Navigation_Menu_Button" id="Sign_out"><span class="Anchor">Sign out</span></button></li>
+        <li id="Bm" class="List"><button class="Navigation_Menu_Button"><a class="Anchor" href="">Bookmarks</a></button></li>
+        <li id="Rp" class="List"><button class="Navigation_Menu_Button"><a class="Anchor" href="">Reacted posts</a></button></li>
+    </ul>
+    <div id="Shownews"></div>
+    <dialog id="Processing" class="dialog">
+        <p>Loading news... Please wait.</p>
+    </dialog>
+    <script src="Read_news_page.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+.Readnews{
+    display: inline-block;
+    border: 1px solid;
+}
+
+.btn{
+    margin: 8px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}

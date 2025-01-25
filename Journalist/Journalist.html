@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journalist</title>
+    <link rel="stylesheet" href="Journalist.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!--For adding styles of like button, dislike...-->
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app-compat.js"></script> <!--Actually it's connecting my firebase app-->
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-database-compat.js"></script> <!--Actually it's connecting Realtime database & it's written before first script because firstly we've to link app, then in it Realtime database-->
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-auth-compat.js"></script>
+
+</head>
+<body id="body">
+
+    <ul id="unordered-list">
+        <li id="M-H"><b>Kanewsif</b></li>
+        <li id="So" class="List"><button class="Navigation_Menu_Button" id="Sign_out">Sign out</button></li>
+        <li id="Bm" class="List"><button class="Navigation_Menu_Button"><a class="Anchor" href="/Read_News_page/Read_news.html">Read news</a></button></li>
+        <li id="Rp" class="List"><button class="Navigation_Menu_Button"><a class="Anchor" href="">Bookmarks</a></button></li>
+        <li id="Rp" class="List"><button class="Navigation_Menu_Button" onclick="document.getElementById('Post_news').showModal()"><b class="Anchor">Post news</b></button></li>
+    </ul><br>
+
+    <dialog id="Post_news">
+        <button  id="Close" class="Button stylingbutton" onclick="document.getElementById('Post_news').close()">Close</button><br><br>
+        <form id="Post__news">
+        <textarea type="text" placeholder="Headline" id="Headline" rows="2" required></textarea><br><br>
+        <textarea type="text" class="textarea" placeholder="Description" id="Description" required></textarea><br><br>
+        <textarea type="text" id="Summary" rows="4" placeholder="Summary of description" required></textarea><br><br>
+        <textarea type="text" class="textarea" placeholder="Evidence(s) [You can add links of post of any platform supporting your news.]" id="Evidence" required></textarea>
+        <hr>
+        <div id="Postnews" ><button id="Postnews">Post News</button></div>
+        </form>
+    </dialog>
+
+    <div id="Shownews">
+        <h1 id="Heading">Your's Posts</h1><br>
+    </div>
+
+    <dialog id="Processing" class="dialog">
+        <p>Processing... Please wait.</p>
+    </dialog>
+
+    <dialog id="Error" class="dialog">
+        <p>Please add atleast some information<br>in all the options.</p>
+        <div id="Goback"><button class="stylingbutton" onclick="document.getElementById('Error').close()">Go back</button></div>
+    </dialog>
+
+    <script src="journalist.js"></script>
+</body>
+</html>
