@@ -125,11 +125,7 @@ Postnews.addEventListener("click", (e) => { //Here e represent the events that w
       let Description = docs.data().Description
       let Summary = docs.data().Summary
       let Evidence = docs.data().Evidence
-      let Time = docs.data().timestamp
-      console.log(sanitizedEmail)
-      let Checkingforlike_dislike = docs.data()?.votes[sanitizedEmail] // To ChatGPT: is it ok to not to throw errors if votes map is not present.
-      
-      console.log(Checkingforlike_dislike)
+      let Time = docs.data().timestamp      
 
       let Date = Time.toDate().toLocaleDateString()
 
