@@ -158,3 +158,16 @@ function Submitfeedback() {
     alert("There is some error in posting news.")
   })
 }
+
+// ui
+const elements = document.querySelectorAll(".toAnimate");
+console.log(elements);
+setTimeout(()=>{
+  elements[0].classList.add("animate1");
+},800);
+setTimeout(()=>{
+  elements[1].classList.add("animate1");
+},1600);
+setTimeout(()=>{
+  elements[2].classList.add("animate1");
+},2400);

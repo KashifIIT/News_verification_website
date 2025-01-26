@@ -29,8 +29,6 @@ firebase.auth().onAuthStateChanged((user) => { //onAuthStateChanged is asynchron
   }
 }) 
 
-console.log(email)
-
 Signout.addEventListener("click", () => {
     firebase.auth().signOut()
       .then(() => {
@@ -44,6 +42,8 @@ Signout.addEventListener("click", () => {
   })
 
   setTimeout(() => {
+  
+    const sanitizedEmail = email.replace('.', '_dot_') //It's for handling like, dislikeof news as firebase treating them as something different.
 
   console.log(email)
 
@@ -109,6 +109,14 @@ Postnews.addEventListener("click", (e) => { //Here e represent the events that w
 
   .then((doc) => {
 
+    if (doc.empty) {
+      let Shownewsdiv = document.getElementById('Shownews');
+      Shownewsdiv.innerHTML = Shownewsdiv.innerHTML + `
+      <i>&nbsp&nbsp&nbspYou'd not posted any news, please post a news to see here.</i>`
+      // Shownewsdiv.style.color = 'white'
+      document.getElementById('Processing').close()
+    } else {
+
     let i = 0;
     doc.forEach(async (docs) => {
 
@@ -117,6 +125,13 @@ Postnews.addEventListener("click", (e) => { //Here e represent the events that w
       let Description = docs.data().Description
       let Summary = docs.data().Summary
       let Evidence = docs.data().Evidence
+      let Time = docs.data().timestamp
+      console.log(sanitizedEmail)
+      let Checkingforlike_dislike = docs.data()?.votes[sanitizedEmail] // To ChatGPT: is it ok to not to throw errors if votes map is not present.
+      
+      console.log(Checkingforlike_dislike)
+
+      let Date = Time.toDate().toLocaleDateString()
 
       const Vote = await firestore.collection(`${Headline}`).doc(`${Headline}`);
 
@@ -182,15 +197,6 @@ Postnews.addEventListener("click", (e) => { //Here e represent the events that w
       let dislikeButtonspan = document.createElement('span')
       dislikeButtonspan.textContent = ` ${Dislike}`
       dislikeButton.append(dislikeButtonspan)
-
-      const commentButton = document.createElement('button');
-      commentButton.classList.add('btn');
-      const commentIcon = document.createElement('i');
-      commentIcon.classList.add('fas', 'fa-comment');
-      commentButton.appendChild(commentIcon);
-      let commentbuttonspan = document.createElement('span')
-      commentbuttonspan.textContent = ' Comment'
-      commentButton.append(commentbuttonspan)
 
       const voteSelect = document.createElement('select');
       voteSelect.classList.add('btn');
@@ -366,25 +372,17 @@ Postnews.addEventListener("click", (e) => { //Here e represent the events that w
 
       });
 
-      // Create Bookmark checkbox and label
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.id = 'bookmark-heart';
+      let spanDate = document.createElement('span');
+      spanDate.textContent = `Posted on: ${Date}`
+      spanDate.style.paddingLeft = '15px'
 
-      const bookmarkLabel = document.createElement('label');
-      bookmarkLabel.classList.add('btn');
-      bookmarkLabel.htmlFor = 'bookmark-heart';
-      bookmarkLabel.style.margin = 'auto 5px';
-      bookmarkLabel.textContent = 'Bookmark';
-
-      // Append all elements to action-buttons div
+      // Appending all the elements to action-buttons div
       actionButtonsDiv.appendChild(likeButton);
       actionButtonsDiv.appendChild(dislikeButton);
-      actionButtonsDiv.appendChild(commentButton);
       actionButtonsDiv.appendChild(voteSelect);
       actionButtonsDiv.appendChild(percentSelect);
-      actionButtonsDiv.appendChild(checkbox);
-      actionButtonsDiv.appendChild(bookmarkLabel);
+      actionButtonsDiv.appendChild(spanDate);
+
 
       // Append action-buttons div to main div
       readNewsDiv.appendChild(actionButtonsDiv);
@@ -401,13 +399,15 @@ Postnews.addEventListener("click", (e) => { //Here e represent the events that w
           Forremovingdislike()
         }
 
-        likeButton.style.color = "#4078e6"
+        likeButton.style.color = "rgb(45 52 255)"
+        likeButton.style.backgroundColor=`white`;
         
         Likebuttonspan.textContent = ` ${++Like}`
         likeButton.removeEventListener("click", Forliking)
         likeButton.addEventListener("click", Forremovinglike)
         Vote.update({
-          Like: firebase.firestore.FieldValue.increment(1)
+          Like: firebase.firestore.FieldValue.increment(1),
+          [`votes.${sanitizedEmail}`]: 'like'
         })
       }
       
@@ -415,12 +415,15 @@ Postnews.addEventListener("click", (e) => { //Here e represent the events that w
         likeButton.style.color = ""
 
         Likebuttonspan.textContent = ` ${--Like}`
+        likeButton.style.backgroundColor=`transparent`;
+
 
         likeButton.removeEventListener("click", Forremovinglike)
         likeButton.addEventListener("click", Forliking)
 
         Vote.update({ //It's asynchronomous function
-          Like: firebase.firestore.FieldValue.increment(-1)
+          Like: firebase.firestore.FieldValue.increment(-1),
+          [`votes.${sanitizedEmail}`]: ''
         })
 
       } 
@@ -434,6 +437,7 @@ Postnews.addEventListener("click", (e) => { //Here e represent the events that w
         }
 
         dislikeButton.style.color = "#cf2929"
+        dislikeButton.style.backgroundColor=`white`;
         dislikeButtonspan.textContent = ` ${++Dislike}`
 
         dislikeButton.removeEventListener("click", Fordisliking )
@@ -441,24 +445,28 @@ Postnews.addEventListener("click", (e) => { //Here e represent the events that w
         //Adding javascript for removing color of dislike and for decreasing value of Dislike
         dislikeButton.addEventListener("click", Forremovingdislike)
         Vote.update({ //It's asynchronomous function.
-          Dislike: firebase.firestore.FieldValue.increment(1)
+          Dislike: firebase.firestore.FieldValue.increment(1),
+          [`votes.${sanitizedEmail}`]: 'dislike'
         })
       }
       
       const Forremovingdislike = () => {
         dislikeButton.style.color = ""
         dislikeButtonspan.textContent = `\t${--Dislike}`
+        dislikeButton.style.backgroundColor=`transparent`;
         
         dislikeButton.removeEventListener("click", Forremovingdislike)
         dislikeButton.addEventListener("click", Fordisliking)
 
         Vote.update({
-          Dislike: firebase.firestore.FieldValue.increment(-1)
+          Dislike: firebase.firestore.FieldValue.increment(-1),
+          [`votes.${sanitizedEmail}`]: ''
         })
          }
 
       dislikeButton.addEventListener("click", Fordisliking )
 
+      console.log(i)
       let a = document.getElementsByTagName('h2')[i]
       a.addEventListener("click", () => {
         
@@ -472,15 +480,11 @@ Postnews.addEventListener("click", (e) => { //Here e represent the events that w
         Shownews.before(divGoback)
         
         let Showcasingnews = document.createElement('div')
-        document.documentElement.append(Showcasingnews)
+        Shownews.append(Showcasingnews)
 
         let h21 = document.createElement('h2')
-        h21.innerHTML = `<u>Headline</u>:`
+        h21.innerHTML = `<u>Headline</u>:  ${Headline}`
         Showcasingnews.append(h21)
-
-        let div0 = document.createElement('h3')
-        div0.textContent = `${Headline}`
-        Showcasingnews.append(div0)
 
         let hr1 = document.createElement('hr')
         Showcasingnews.append(hr1)
@@ -515,17 +519,18 @@ Postnews.addEventListener("click", (e) => { //Here e represent the events that w
         div3.textContent = `${Evidence}`
         Showcasingnews.append(div3)
 
-        Showcasingnews.style.border = `2px solid`
+        Showcasingnews.style.border = `1px solid gray`
         Showcasingnews.style.padding = '10px 10px'
-        Showcasingnews.style.margin = '7px'
-        Showcasingnews.style.borderRadius = '10px'
+        Showcasingnews.style.marginLeft = '14px'
+        Showcasingnews.style.borderRadius = '10px';
+        Showcasingnews.style.backgroundColor=`white`;
+
       });
       i++
-      document.getElementById('Processing').close()
-    }).catch((error) => {
+      document.getElementById('Processing').close() 
+    }) } }).catch((error) => {
       document.getElementById('Processing').close()
       alert("Please check your network connectivity.")
       console.log(error)
     })
-  }) 
 },1000)

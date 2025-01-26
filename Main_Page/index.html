@@ -6,78 +6,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kanewsif</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app-compat.js"></script> <!--Actually it's connecting my firebase app-->
-    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-database-compat.js"></script> <!--Actually it's connecting my firebase app-->
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app-compat.js"></script>
+    <!--Actually it's connecting my firebase app-->
+    <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-database-compat.js"></script>
+    <!--Actually it's connecting my firebase app-->
     <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-auth-compat.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oldenburg&family=Smooch+Sans&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
     <ul id="unordered-list">
-        <li class="Button" id="Sign-up"><button onclick="document.getElementById('Sign_up').showModal()"
+        <li class="Button" id="Sign-up"><button
+                onclick="document.getElementById('Sign_up').showModal();document.querySelector('.dim').style.display=`block`"
                 class="Buttu" id="Signingup">Sign up</button></li>
-        <li class="Button"><button id="Sign-in" onclick="document.getElementById('Sign_in').showModal()"
+        <li class="Button"><button id="Sign-in"
+                onclick="document.getElementById('Sign_in').showModal();document.querySelector('.dim').style.display=`block`"
                 class="Buttu">Sign in</button></li>
     </ul>
 
-    <div id="M_H"><h1 id="Main_heading"><i>Kanewsif</i></h1></div>
+    <div id="M_H">
+        <h1 id="Main_heading">Kanewsif</h1>
+    </div>
 
-    <span id="Welcome"><b>Welcome, Reader/Journalist!</b></span><br>
+    <span id="Welcome" class="demo toAnimate"><b>Welcome, Reader/Journalist!</b></span><br>
 
-    <p id="Mainpara">I welcome you to our news website, where any user can post news (with detailed
-        analytics), read it, react to it, and vote on it as Fake or Real in a very effective way. Click
-        on Sign Up and enjoy the features mentioned above right now!<br><br>
+    <p id="Mainpara"> <span class="demo toAnimate">I
+            welcome you to our news website, where any user can post news (with detailed
+            analytics), read it, react to it, and vote on it as Fake or Real in a very effective way. Click
+            on Sign Up and enjoy the features mentioned above right now!
+        </span><br><br>
 
-        <i>(Remember, spreading fake news is a punishable act, so act responsibly.)</i>
+        <i class="demo toAnimate">(Remember, spreading fake news is a punishable act, so act responsibly.)</i>
     </p>
     <br><br>
     <hr><br>
 
     <div id="buttons">
-        <button onclick="document.getElementById('Feedbackform').showModal()" id="feedback">Feedback form</button>| Copyright © 2024 Kanewsif.com<br><br>
+        <button
+            onclick="document.getElementById('Feedbackform').showModal();;document.querySelector('.dim').style.display=`block`"
+            id="feedback">Feedback form</button>| Copyright © 2024 Kanewsif.com<br><br>
     </div>
 
     <dialog id="Sign_up" class="dialog">
 
-        <button onclick="document.getElementById('Sign_up').close()" class="in_button-close">Close</button><br><br><br>
+        <button onclick="document.getElementById('Sign_up').close();document.querySelector('.dim').style.display=`none`"
+            class="in_button-close">Close</button><br><br><br>
 
         <div>
 
-            <input class="inputbutton" name="username" id="username" type="text" placeholder="Enter Username" required><br><br><br>
-            
-            <input class="inputbutton" name="email" id="email" type="text" placeholder="Enter email" required><br><br><br>
+            <input class="inputbutton" name="username" id="username" type="text" placeholder="Enter Username"
+                required><br><br><br>
 
-            <input class="inputbutton" name="password" id="pass" type="password" placeholder="Enter password" required><br><br><br>
+            <input class="inputbutton" name="email" id="email" type="text" placeholder="Enter email"
+                required><br><br><br>
 
-            <div id="Signupdialogbox_Signuptext">Sign up as:</div><hr>
-                <div id="Buttons_readerjournalist"><button class="in_buttu" id="Reader-signupbutton" onclick="signup_of_reader()">Reader</button>&nbsp;&nbsp;<button id="Journalist-signupbutton" class="in_buttu" onclick="signup_of_journalist()">Journalist</button></div>
+            <input class="inputbutton" name="password" id="pass" type="password" placeholder="Enter password"
+                required><br><br><br>
+
+            <div id="Signupdialogbox_Signuptext">Sign up as:</div>
+            <hr>
+            <div id="Buttons_readerjournalist"><button class="in_buttu" id="Reader-signupbutton"
+                    onclick="signup_of_reader()">Reader</button>&nbsp;&nbsp;<button id="Journalist-signupbutton"
+                    class="in_buttu" onclick="signup_of_journalist()">Journalist</button></div>
         </div>
     </dialog>
 
     <dialog id="Sign_in" class="dialog">
 
-        <button onclick="document.getElementById('Sign_in').close()" class="in_button-close">Close</button><br><br><br>
+        <button onclick="document.getElementById('Sign_in').close();document.querySelector('.dim').style.display=`none`"
+            class="in_button-close">Close</button><br><br><br>
 
         <div>
 
-            <input class="inputbutton" name="email" id="Username" type="text" placeholder="Enter email" required><br><br><br>
+            <input class="inputbutton" name="email" id="Username" type="text" placeholder="Enter email"
+                required><br><br><br>
 
-            <input class="inputbutton" name="password" id="Pass" type="password" placeholder="Enter password" required><br><br><br>
+            <input class="inputbutton" name="password" id="Pass" type="password" placeholder="Enter password"
+                required><br><br><br>
 
-            <div class="Submit"><button id="sign__in" type="submit" class="in_button" onclick="signin()">Sign in</button></div>
-            
+            <div class="Submit"><button id="sign__in" type="submit" class="in_button" onclick="signin()">Sign
+                    in</button></div>
+
         </div>
     </dialog>
 
     <dialog id="Feedbackform" class="dialog">
 
-        <div id="in_button"><button onclick="document.getElementById('Feedbackform').close()"
+        <div id="in_button"><button
+                onclick="document.getElementById('Feedbackform').close();document.querySelector('.dim').style.display=`none`"
                 class="in_button-close">Close</button></div><br><br><br>
 
         <div>
 
-            <div style =" clear: right;"><b><i><span>Rate us</span></i></b>
+            <div style=" clear: right;"><b><i><span>Rate us</span></i></b>
 
                 <input id="star1" type="radio" value="1" name="star" required>
                 <label for="star1">1</label>
@@ -99,21 +124,23 @@
             <textarea id="Suggestion" placeholder="Write Feedback..." cols="33" rows="4"></textarea><br><br>
 
 
-            <div class="Submit"> <button onclick = "Submitfeedback()" class="in_button">Submit</button></div>
+            <div class="Submit"> <button onclick="Submitfeedback()" class="in_button">Submit</button></div>
         </div>
     </dialog>
 
-<!-- Creating dialog box for processing during Signin/Signup -->
+    <!-- Creating dialog box for processing during Signin/Signup -->
 
-<dialog id="Processing" class="dialog">
-    <p>Processing... Please wait.</p>
-</dialog>
+    <dialog id="Processing" class="dialog">
+        <p>Processing... Please wait.</p>
+    </dialog>
 
-<dialog id="Submitting" class="dialog">
-    <p>Submitting the<br> feedback... Please wait.</p>
-</dialog>
+    <dialog id="Submitting" class="dialog">
+        <p>Submitting the<br> feedback... Please wait.</p>
+    </dialog>
+    <div class="dim">
 
-<script src="node.js"></script>
+    </div>
+    <script src="node.js"></script>
 
 </body>
 

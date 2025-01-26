@@ -15,7 +15,8 @@ body {
 .Readnews{
     display: inline-block;
     border: 1px solid;
-    margin: 15px 15px
+    margin: 15px 15px;
+    width: 47vw;
 }
 
 .btn{
@@ -24,15 +25,13 @@ body {
 
 /* Now, from here main code for remaining thing start */
 
-.Anchor{
-    text-decoration: none;
-    color: white;
-    font-size: 14px;
-}
 
 .Navigation_Menu_Button{
+    color: white;
+    font-size: 14px;
     background-color: black;
     border: none;
+    margin-right: 10px;
 }
 
 .Navigation_Menu_Button:hover {
@@ -73,7 +72,7 @@ body {
 /* Creating div from block to inline block to show news in the middle */
 
 #Shownews{
-    width: 1270px;
+    width: 100vw;
     margin-top: 10px;
     margin-left: -10px;
 }
@@ -118,7 +117,3 @@ body {
     float: right;
     cursor: pointer;
  }
-
-.Readnews{
-    width: 600px
-}
