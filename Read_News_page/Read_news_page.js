@@ -53,6 +53,10 @@ firestore.collection("Postnews").orderBy("timestamp", "desc").get()
       let Description = doc.data().Description
       let Summary = doc.data().Summary
       let Evidence = doc.data().Evidence
+      let Time = doc.data().timestamp      
+
+      let Date = Time.toDate().toLocaleDateString()
+
 
       let Fakevalue;
       let Like;
@@ -117,15 +121,6 @@ firestore.collection("Postnews").orderBy("timestamp", "desc").get()
       let dislikeButtonspan = document.createElement('span')
       dislikeButtonspan.textContent = ` ${Dislike}`
       dislikeButton.append(dislikeButtonspan)
-
-      const commentButton = document.createElement('button');
-      commentButton.classList.add('btn');
-      const commentIcon = document.createElement('i');
-      commentIcon.classList.add('fas', 'fa-comment');
-      commentButton.appendChild(commentIcon);
-      let commentbuttonspan = document.createElement('span')
-      commentbuttonspan.textContent = ' Comment'
-      commentButton.append(commentbuttonspan)
 
       const voteSelect = document.createElement('select');
       voteSelect.classList.add('btn');
@@ -299,26 +294,16 @@ firestore.collection("Postnews").orderBy("timestamp", "desc").get()
 
       });
 
-      // Create Bookmark checkbox and label
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.id = 'bookmark-heart';
+      let spanDate = document.createElement('span');
+      spanDate.textContent = `Posted on: ${Date}`
+      spanDate.style.paddingLeft = '15px'
 
-      const bookmarkLabel = document.createElement('label');
-      bookmarkLabel.classList.add('btn');
-      bookmarkLabel.htmlFor = 'bookmark-heart';
-      bookmarkLabel.style.margin = 'auto 5px';
-      bookmarkLabel.textContent = 'Bookmark';
-
-      // Append all elements to action-buttons div
       actionButtonsDiv.appendChild(likeButton);
       actionButtonsDiv.appendChild(dislikeButton);
-      actionButtonsDiv.appendChild(commentButton);
       actionButtonsDiv.appendChild(voteSelect);
       actionButtonsDiv.appendChild(percentSelect);
-      actionButtonsDiv.appendChild(checkbox);
-      actionButtonsDiv.appendChild(bookmarkLabel);
-
+      actionButtonsDiv.appendChild(spanDate);
+      
       // Append action-buttons div to main div
       readNewsDiv.appendChild(actionButtonsDiv);
 
@@ -412,7 +397,6 @@ firestore.collection("Postnews").orderBy("timestamp", "desc").get()
         Shownews.before(divGoback)
 
         let Showcasingnews = document.createElement('div')
-        document.documentElement.append(Showcasingnews)
 
         let h21 = document.createElement('h2')
         h21.innerHTML = `<u>Headline</u>:`
@@ -455,10 +439,14 @@ firestore.collection("Postnews").orderBy("timestamp", "desc").get()
         div3.textContent = `${Evidence}`
         Showcasingnews.append(div3)
 
-        Showcasingnews.style.border = `2px solid`
-        Showcasingnews.style.padding = '10px 10px'
-        Showcasingnews.style.margin = '7px'
+        Shownews.append(Showcasingnews)
+
+        Showcasingnews.style = ``
+        Showcasingnews.style.border = `2px solid grey`
+        Showcasingnews.style.padding = '10px'
+        Showcasingnews.style.marginRight = '24px'
         Showcasingnews.style.borderRadius = '10px'
+        Showcasingnews.style.backgroundColor = 'white'
       });
       i++
     })
