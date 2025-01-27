@@ -49,7 +49,7 @@ Introduction -> Web ->Copy the code written under sign up for new users*/
       }) .catch(() => {
         alert("There is some error in signing up you as reader.")
       })
-      window.location.href = "/Read_News_page/Read_news.html"
+      window.location.href = "../Read_News_page/Read_news.html"
       document.getElementById('Processing').close()
     })
     .catch((error) => {
@@ -84,7 +84,7 @@ Introduction -> Web ->Copy the code written under sign up for new users*/
       })
 
       document.getElementById('Processing').close()
-      window.location.href = "/Journalist/Journalist.html"
+      window.location.href = "../Journalist/Journalist.html" // .. will take it one step back folder.
     })
     .catch((error) => {
       document.getElementById('Processing').close()
