@@ -15,7 +15,6 @@ body {
     object-fit: contain;
     height: 100vh;
     /* Ensures the body takes up the full viewport height */
-
 }
 
 /* Below two query written are for showing news in a better way. */
