@@ -200,6 +200,7 @@ Postnews.addEventListener("click", (e) => { //Here e represent the events that w
       voteDefaultOption.disabled = true;
       voteDefaultOption.selected = true;
       voteDefaultOption.textContent = 'Vote news';
+      voteDefaultOption.value = '';
       voteSelect.appendChild(voteDefaultOption);
       
       const Option1 = document.createElement('option');
@@ -263,110 +264,147 @@ Postnews.addEventListener("click", (e) => { //Here e represent the events that w
         }
       })
 
-      voteSelect.addEventListener("change", async (event) => {
+      const RemovingOption1 = () => {
+        console.log("I am clicked")
+        Vote.update({
+          Real: firebase.firestore.FieldValue.increment(-1)
+        }).then(() => {
+          alert('Down vote successfully done.')
+          Option2.disabled = false
+          Option3.disabled = false
+          Option4.disabled = false
+          console.log("done")
+          voteSelect.removeEventListener("change", voteselectRemover);
+          voteSelect.addEventListener("change", voteselect);
+        }).catch((error) => {
+          alert(error);
+        })
+      }
+
+      function RemovingOption2() {
+        Vote.update({
+          Mightreal: firebase.firestore.FieldValue.increment(-1)
+        }).then(() => {
+          alert('Down vote successfully done.')
+          Option1.disabled = false
+          Option3.disabled = false
+          Option4.disabled = false
+          voteSelect.removeEventListener("change", voteselectRemover);
+          voteSelect.addEventListener("change", voteselect);
+        })
+      }
+
+      function RemovingOption3() {
+        Vote.update({
+          Mightfake: firebase.firestore.FieldValue.increment(-1)
+        }).then(() => {
+          alert('Down vote successfully done.')
+          Option1.disabled = false
+          Option2.disabled = false
+          Option4.disabled = false
+          voteSelect.removeEventListener("change", voteselectRemover);
+          voteSelect.addEventListener("change", voteselect);
+        })
+      }
+
+      function RemovingOption4() {
+        Vote.update({
+          Fake: firebase.firestore.FieldValue.increment(-1)
+        }).then(() => {
+          alert('Down vote successfully done.')
+          Option1.disabled = false
+          Option2.disabled = false
+          Option3.disabled = false
+          voteSelect.removeEventListener("change", voteselectRemover);
+          voteSelect.addEventListener("change", voteselect);
+        })
+      }
+
+      const voteselectRemover = async () => {
+        let selectedValue = event.target.value;
+        voteSelect.value = ""
+
+        console.log("I am selected")
+
+        if (selectedValue == "It's real.") {
+
+          RemovingOption1();
+
+        } else if (selectedValue == "It might be real.") {
+
+          RemovingOption2();
+
+        } else if (selectedValue == "It might be fake.") {
+
+          RemovingOption3();
+
+        } else {
+
+          RemovingOption4()
+
+        }
+      }
+
+      const voteselect = async () => {
         let selectedValue = event.target.value;
 
         if (selectedValue == "It's real.") {
 
-          await Vote.update({
+          Vote.update({
             Real: firebase.firestore.FieldValue.increment(1)
-          }) .then(() => {
+          }).then(() => {
             Option2.disabled = true
             Option3.disabled = true
             Option4.disabled = true
-
-            Option1.addEventListener("click", RemovingOption1)
-
-            async function RemovingOption1 () {
-              await Vote.update({
-                Real: firebase.firestore.FieldValue.increment(-1)
-              }).then(() => {
-                alert('Down vote successfully done.')
-                Option2.disabled = false
-                Option3.disabled = false
-                Option4.disabled = false
-              })
-              Option1.removeEventListener("click", RemovingOption1)
-            }
+            alert("Voted successfully.")
+            voteSelect.removeEventListener("change", voteselect);
+            voteSelect.addEventListener("change", voteselectRemover);
           })
 
         } else if (selectedValue == "It might be real.") {
 
-          await Vote.update({
+          Vote.update({
             Mightreal: firebase.firestore.FieldValue.increment(1)
-          }) .then(() => {
+          }).then(() => {
             Option1.disabled = true
             Option3.disabled = true
             Option4.disabled = true
-
-            Option2.addEventListener("click", RemovingOption2)
-
-            async function RemovingOption2 () {
-              await Vote.update({
-                Mightreal: firebase.firestore.FieldValue.increment(-1)
-              }).then(() => {
-                alert('Down vote successfully done.')
-                Option1.disabled = false
-                Option3.disabled = false
-                Option4.disabled = false
-              })
-              Option2.removeEventListener("click", RemovingOption2)
-            }
+            alert("Voted successfully.")
+            voteSelect.removeEventListener("change", voteselect);
+            voteSelect.addEventListener("change", voteselectRemover);
           })
 
         } else if (selectedValue == "It might be fake.") {
 
-          await Vote.update({
+          Vote.update({
             Mightfake: firebase.firestore.FieldValue.increment(1)
-          }) .then(() => {
+          }).then(() => {
             Option1.disabled = true
-            Option2.disabled = tru3
+            Option2.disabled = true
             Option4.disabled = true
-
-            Option3.addEventListener("click", RemovingOption3)
-
-            async function RemovingOption3 () {
-              await Vote.update({
-                Mightfake: firebase.firestore.FieldValue.increment(-1)
-              }).then(() => {
-                alert('Down vote successfully done.')
-                Option1.disabled = false
-                Option2.disabled = false
-                Option4.disabled = false
-              })
-              Option3.removeEventListener("click", RemovingOption3)
-            }
+            alert("Voted successfully.")
+            voteSelect.removeEventListener("change", voteselect);
+            voteSelect.addEventListener("change", voteselectRemover);
           })
 
         } else {
 
-          await Vote.update({
+          Vote.update({
             Fake: firebase.firestore.FieldValue.increment(1)
-          }) .then(() => {
+          }).then(() => {
             Option1.disabled = true
             Option2.disabled = true
             Option3.disabled = true
-
-            Option4.addEventListener("click", RemovingOption4)
-
-            async function RemovingOption4 () {
-              await Vote.update({
-                Fake : firebase.firestore.FieldValue.increment(-1)
-              }).then(() => {
-                alert('Down vote successfully done.')
-                Option1.disabled = false
-                Option2.disabled = false
-                Option3.disabled = false
-              })
-              Option4.removeEventListener("click", RemovingOption4)
-            }
+            alert("Voted successfully.")
+            voteSelect.removeEventListener("change", voteselect);
+            voteSelect.addEventListener("change", voteselectRemover);
           })
 
         }
+        voteSelect.value = "";
+      }
 
-        alert("Voted successfully.")
-
-      });
+      voteSelect.addEventListener("change", voteselect);
 
       let spanDate = document.createElement('span');
       spanDate.textContent = `Posted on: ${Date}`
