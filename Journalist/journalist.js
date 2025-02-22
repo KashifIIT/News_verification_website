@@ -43,7 +43,7 @@ Signout.addEventListener("click", () => {
 
   setTimeout(() => {
   
-    const sanitizedEmail = email.replace('.', '_dot_') //It's for handling like, dislikeof news as firebase treating them as something different.
+    // const sanitizedEmail = email.replace('.', '_dot_') //It's for handling like, dislikeof news as firebase treating them as something different.
 
   console.log(email)
 
