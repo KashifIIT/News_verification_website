@@ -33,7 +33,7 @@ Signout.addEventListener("click", () => {
   firebase.auth().signOut()
     .then(() => {
       alert('User signed out successfully');
-      window.location.href = "../Main_Page/index.html";
+      window.location.href = "../docs/index.html"; // .. will get it back to main folder which is here HTML
     })
     .catch((error) => {
       console.error('Sign out error:', error);

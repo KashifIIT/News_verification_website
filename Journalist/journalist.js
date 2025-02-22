@@ -34,7 +34,7 @@ Signout.addEventListener("click", () => {
       .then(() => {
         alert('User signed out successfully');
         // Optionally redirect or update UI
-        window.location.href = "../Main_Page/index.html";
+        window.location.href = "../docs/index.html";
       })
       .catch((error) => {
         console.error('Sign out error:', error);
