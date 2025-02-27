@@ -427,78 +427,76 @@ Postnews.addEventListener("click", (e) => { //Here e represent the events that w
 
       //Creating system for like/dislike
 
+      
       const Forliking = () => {
 
-        if(dislikeButtonspan.textContent == ` ${MaxmDislike}`){
+        if (dislikeButtonspan.textContent == ` ${MaxmDislike}`) {
           Forremovingdislike()
         }
 
-        likeButton.style.color = "rgb(45 52 255)"
-        likeButton.style.backgroundColor=`white`;
-        
+        likeButton.style.color = "#4078e6"
+        likeButton.style.backgroundColor = "white"
+
         Likebuttonspan.textContent = ` ${++Like}`
         likeButton.removeEventListener("click", Forliking)
         likeButton.addEventListener("click", Forremovinglike)
         Vote.update({
-          Like: firebase.firestore.FieldValue.increment(1),
-          [`votes.${sanitizedEmail}`]: 'like'
+          Like: firebase.firestore.FieldValue.increment(1)
         })
       }
-      
+
       const Forremovinglike = () => {
         likeButton.style.color = ""
+        likeButton.style.backgroundColor = ""
 
         Likebuttonspan.textContent = ` ${--Like}`
-        likeButton.style.backgroundColor=`transparent`;
-
 
         likeButton.removeEventListener("click", Forremovinglike)
         likeButton.addEventListener("click", Forliking)
 
         Vote.update({ //It's asynchronomous function
-          Like: firebase.firestore.FieldValue.increment(-1),
-          [`votes.${sanitizedEmail}`]: ''
+          Like: firebase.firestore.FieldValue.increment(-1)
         })
 
-      } 
+      }
 
       likeButton.addEventListener("click", Forliking)
 
       const Fordisliking = () => {
 
-        if(Likebuttonspan.textContent == ` ${Maxmlike}`){
+        if (Likebuttonspan.textContent == ` ${Maxmlike}`) {
           Forremovinglike()
         }
 
         dislikeButton.style.color = "#cf2929"
-        dislikeButton.style.backgroundColor=`white`;
+        dislikeButton.style.backgroundColor = "white"
         dislikeButtonspan.textContent = ` ${++Dislike}`
 
-        dislikeButton.removeEventListener("click", Fordisliking )
+        dislikeButton.removeEventListener("click", Fordisliking)
 
         //Adding javascript for removing color of dislike and for decreasing value of Dislike
         dislikeButton.addEventListener("click", Forremovingdislike)
         Vote.update({ //It's asynchronomous function.
-          Dislike: firebase.firestore.FieldValue.increment(1),
-          [`votes.${sanitizedEmail}`]: 'dislike'
+          Dislike: firebase.firestore.FieldValue.increment(1)
         })
       }
-      
+
       const Forremovingdislike = () => {
         dislikeButton.style.color = ""
+        dislikeButton.style.backgroundColor = ""
+
         dislikeButtonspan.textContent = `\t${--Dislike}`
-        dislikeButton.style.backgroundColor=`transparent`;
-        
+
         dislikeButton.removeEventListener("click", Forremovingdislike)
         dislikeButton.addEventListener("click", Fordisliking)
 
         Vote.update({
-          Dislike: firebase.firestore.FieldValue.increment(-1),
-          [`votes.${sanitizedEmail}`]: ''
+          Dislike: firebase.firestore.FieldValue.increment(-1)
         })
-         }
+      }
 
-      dislikeButton.addEventListener("click", Fordisliking )
+      dislikeButton.addEventListener("click", Fordisliking)
+
 
       console.log(i)
       let a = document.getElementsByTagName('h2')[i]
